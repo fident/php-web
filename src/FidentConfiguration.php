@@ -123,4 +123,9 @@ class FidentConfiguration
     $this->_serviceUrl = $serviceUrl;
     return $this;
   }
+
+  public function getReauthUrl()
+  {
+    return rtrim($this->_serviceUrl, '/') . '/reauthenticate';
+  }
 }
