@@ -194,4 +194,19 @@ class FidentJwtData
     return $this;
   }
 
+  public function getFirstName()
+  {
+    return $this->getAttributeValue('firstname');
+  }
+
+  public function getLastName()
+  {
+    return $this->getAttributeValue('lastname');
+  }
+
+  public function getAttributeValue($key)
+  {
+    return isset($this->_attributes[$key]) ? $this->_attributes[$key]->getValue() : null;
+  }
+
 }
