@@ -7,6 +7,12 @@ class UserAttribute
   protected $_key;
   protected $_value;
 
+  public function __construct($key = null, $value = null)
+  {
+    $this->_key = $key;
+    $this->_value = $value;
+  }
+
   /**
    * @return mixed
    */

@@ -1,6 +1,7 @@
 <?php
 namespace Fident\Web;
 
+use Fident\Web\Notifications\FidentNotification;
 use Fident\Web\UserData\FidentJwtData;
 use Packaged\Helpers\Objects;
 
@@ -60,6 +61,18 @@ class Fident
     $data->setTokenId(Objects::property($payload, 'sub'));
 
     return $data;
+  }
+
+  public function decodeNotification($requestBody): ?FidentNotification
+  {
+    $notification = json_decode($requestBody);
+    $data = Objects::property($notification, 'Data', '');
+    $sig = self::urlsafeB64Decode(Objects::property($notification, 'Signature', ''));
+    if(openssl_verify($data, $sig, $this->getConfig()->getPublicKey(), OPENSSL_ALGO_SHA256))
+    {
+      return FidentNotification::fromString($data);
+    }
+    return null;
   }
 
   public static function urlsafeB64Decode($input)
