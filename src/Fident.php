@@ -70,7 +70,7 @@ class Fident
     $sig = self::urlsafeB64Decode(Objects::property($notification, 'Signature', ''));
     if(openssl_verify($data, $sig, $this->getConfig()->getPublicKey(), OPENSSL_ALGO_SHA256))
     {
-      return FidentNotification::fromString($data);
+      return FidentNotification::generate(Objects::property($notification, 'DataType', 1), $data);
     }
     return null;
   }
