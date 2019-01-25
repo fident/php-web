@@ -7,7 +7,8 @@ use Packaged\Helpers\Objects;
 
 class Fident
 {
-  const JWT_COOKIE_NAME = 'fident-token-ns';
+  const JWT_COOKIE_NAME = 'fident-token';
+  const JWT_COOKIE_NAME_INSECURE = 'fident-token-ns';
 
   /**
    * @var FidentConfiguration
