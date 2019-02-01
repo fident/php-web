@@ -9,10 +9,10 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.1",
     "ext-json": "*",
     "ext-openssl": "*",
-    "packaged/helpers": "~1.0"
+    "packaged/helpers": "^1.0||^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~7.0"
