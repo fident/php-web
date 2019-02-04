@@ -49,11 +49,13 @@ class FidentConfiguration
   }
 
   /**
+   * @param null $returnUrl
+   *
    * @return mixed
    */
-  public function getRegisterUrl()
+  public function getRegisterUrl($returnUrl = null)
   {
-    return $this->_registerUrl;
+    return $this->_registerUrl . ($returnUrl ? '?destination=' . $returnUrl : '');
   }
 
   /**
@@ -68,11 +70,13 @@ class FidentConfiguration
   }
 
   /**
+   * @param null $returnUrl
+   *
    * @return mixed
    */
-  public function getLoginUrl()
+  public function getLoginUrl($returnUrl = null)
   {
-    return $this->_loginUrl;
+    return $this->_loginUrl . ($returnUrl ? '?destination=' . $returnUrl : '');
   }
 
   /**
@@ -87,11 +91,13 @@ class FidentConfiguration
   }
 
   /**
+   * @param null $returnUrl
+   *
    * @return mixed
    */
-  public function getLogoutUrl()
+  public function getLogoutUrl($returnUrl = null)
   {
-    return $this->_logoutUrl;
+    return $this->_logoutUrl . ($returnUrl ? '?destination=' . $returnUrl : '');
   }
 
   /**
@@ -124,8 +130,13 @@ class FidentConfiguration
     return $this;
   }
 
-  public function getReauthUrl()
+  /**
+   * @param null $returnUrl
+   *
+   * @return string
+   */
+  public function getReauthUrl($returnUrl = null)
   {
-    return rtrim($this->_serviceUrl, '/') . '/reauthenticate';
+    return rtrim($this->_serviceUrl, '/') . '/reauthenticate' . ($returnUrl ? '?destination=' . $returnUrl : '');
   }
 }
