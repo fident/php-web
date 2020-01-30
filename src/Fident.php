@@ -41,6 +41,10 @@ class Fident
   public function decodeJwtPayload(string $rawJwt): ?FidentJwtData
   {
     $data = new FidentJwtData();
+    if(substr_count($rawJwt, '.') !== 2)
+    {
+      return $data;
+    }
 
     [, $payload64,] = explode('.', $rawJwt, 3);
     $payload = json_decode(Strings::urlsafeBase64Decode($payload64));
