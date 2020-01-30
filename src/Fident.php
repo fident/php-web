@@ -28,7 +28,7 @@ class Fident
 
   public function verifyJwt(string $rawJwt): bool
   {
-    list($head64, $payload64, $sig64) = explode('.', $rawJwt, 3);
+    [$head64, $payload64, $sig64] = explode('.', $rawJwt, 3);
     $header = json_decode(Strings::urlsafeBase64Decode($head64));
     if(!$header || !isset($header->typ) || $header->typ !== 'JWT')
     {
@@ -42,7 +42,7 @@ class Fident
   {
     $data = new FidentJwtData();
 
-    list(, $payload64,) = explode('.', $rawJwt, 3);
+    [, $payload64,] = explode('.', $rawJwt, 3);
     $payload = json_decode(Strings::urlsafeBase64Decode($payload64));
     $payload->payload = Strings::urlsafeBase64Decode($payload->payload);
 
