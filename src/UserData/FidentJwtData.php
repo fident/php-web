@@ -19,7 +19,7 @@ class FidentJwtData
 
   protected $_accountType;
   protected $_expiry;
-  protected $_issuesAt;
+  protected $_issuedAt;
   protected $_issuer;
   protected $_tokenId;
 
@@ -140,19 +140,19 @@ class FidentJwtData
   /**
    * @return mixed
    */
-  public function getIssuesAt()
+  public function getIssuedAt()
   {
-    return $this->_issuesAt;
+    return $this->_issuedAt;
   }
 
   /**
-   * @param mixed $issuesAt
+   * @param mixed $issuedAt
    *
    * @return FidentJwtData
    */
-  public function setIssuesAt($issuesAt)
+  public function setIssuedAt($issuedAt)
   {
-    $this->_issuesAt = $issuesAt;
+    $this->_issuedAt = $issuedAt;
     return $this;
   }
 

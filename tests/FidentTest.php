@@ -46,7 +46,7 @@ CbpSJWmxERnAlaZswdA5oEsHU8H526jLWeNnW5B/gAu3TGCl+uEq+nPG7HByqvT9
   {
     $decoded = $this->_buildFident()->decodeJwtPayload($this->_testJwt());
     $this->assertEquals("account.fortifi.me:7180", $decoded->getIssuer());
-    $this->assertEquals(1547828570, $decoded->getIssuesAt());
+    $this->assertEquals(1547828570, $decoded->getIssuedAt());
     $this->assertEquals(1550420570, $decoded->getExpiry());
     $this->assertEquals("user", $decoded->getAccountType());
     $this->assertEquals("EFIDFIAT-ZG8XQTZLY-MISCR-7MMNMN9", $decoded->getTokenId());

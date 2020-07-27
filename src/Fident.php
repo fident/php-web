@@ -67,7 +67,7 @@ class Fident
 
     $data->setAccountType(Objects::property($payload, 'account_type'));
     $data->setExpiry(Objects::property($payload, 'exp'));
-    $data->setIssuesAt(Objects::property($payload, 'iat'));
+    $data->setIssuedAt(Objects::property($payload, 'iat'));
     $data->setIssuer(Objects::property($payload, 'iss'));
     $data->setTokenId(Objects::property($payload, 'sub'));
 
