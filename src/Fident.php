@@ -26,30 +26,69 @@ class Fident
     return $this->_configuration;
   }
 
+  protected $_verifyCache = [];
+
   public function verifyJwt(string $rawJwt): bool
   {
+    if(empty($rawJwt))
+    {
+      return false;
+    }
+
+    $jwtHash = md5($rawJwt);
+    if(isset($this->_verifyCache[$jwtHash]))
+    {
+      return $this->_verifyCache[$jwtHash];
+    }
+
     $parts = explode('.', $rawJwt, 3);
     if(count($parts) != 3)
     {
-      return false;
+      $this->_verifyCache[$jwtHash] = false;
+      return $this->_verifyCache[$jwtHash];
     }
     [$head64, $payload64, $sig64] = $parts;
     $header = json_decode(Strings::urlsafeBase64Decode($head64));
     if(!$header || !isset($header->typ) || $header->typ !== 'JWT')
     {
-      return false;
+      $this->_verifyCache[$jwtHash] = false;
+      return $this->_verifyCache[$jwtHash];
     }
     $key = $this->_configuration->getPublicKey();
-    return openssl_verify("$head64.$payload64", Strings::urlsafeBase64Decode($sig64), $key, OPENSSL_ALGO_SHA256) === 1;
+    $this->_verifyCache[$jwtHash] = openssl_verify(
+        "$head64.$payload64",
+        Strings::urlsafeBase64Decode($sig64),
+        $key,
+        OPENSSL_ALGO_SHA256
+      ) === 1;
+    return $this->_verifyCache[$jwtHash];
   }
+
+  /**
+   * @var FidentJwtData[]
+   */
+  protected $_dataCache = [];
 
   public function decodeJwtPayload(string $rawJwt): ?FidentJwtData
   {
-    $data = new FidentJwtData();
-    if(substr_count($rawJwt, '.') !== 2)
+    if(empty($rawJwt))
     {
-      return $data;
+      return null;
     }
+
+    $jwtHash = md5($rawJwt);
+    if(isset($this->_dataCache[$jwtHash]))
+    {
+      return $this->_dataCache[$jwtHash];
+    }
+
+    if(!$this->verifyJwt($rawJwt))
+    {
+      return null;
+    }
+
+    $data = new FidentJwtData();
+    $this->_dataCache[$jwtHash] = $data;
 
     [, $payload64,] = explode('.', $rawJwt, 3);
     $payload = json_decode(Strings::urlsafeBase64Decode($payload64));
