@@ -34,7 +34,7 @@ class FidentJwtData
       $attribute = new UserAttribute();
       $attribute->setId(Objects::property($attr, 'I'));
       $attribute->setKey(Objects::property($attr, 'K'));
-      $attribute->setValue(Objects::property($attr, 'V'));
+      $attribute->setValue(html_entity_decode(Objects::property($attr, 'V'), ENT_QUOTES | ENT_XHTML, 'UTF-8'));
       $this->_attributes[$attribute->getKey()] = $attribute;
     }
     $this->_userAgent = Objects::property($payload, 'U');
